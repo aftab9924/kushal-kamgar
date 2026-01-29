@@ -39,17 +39,30 @@ const CustomerDashboard = () => {
                 <div className="space-y-4">
                 {jobs.length === 0 ? (
                     <p className="text-slate-500 italic">No jobs posted yet.</p>
-                ) : (
-                    jobs.map(job => (
-                    <div key={job.id} className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-blue-500">
+                ) : (jobs.map(job => (
+                    <div key={job.id} className={`bg-white p-4 rounded-lg shadow-sm border-l-4 
+                        ${job.status === 'ACCEPTED' ? 'border-green-500' : 'border-blue-500'}`}>
+                        
                         <div className="flex justify-between">
                         <span className="font-bold text-blue-600">{job.category}</span>
-                        <span className="text-xs bg-slate-100 px-2 py-1 rounded">{job.status}</span>
+                        <span className={`text-xs px-2 py-1 rounded font-bold 
+                            ${job.status === 'ACCEPTED' ? 'bg-green-100 text-green-600' : 'bg-slate-100'}`}>
+                            {job.status}
+                        </span>
                         </div>
+
                         <p className="text-slate-700 mt-2">{job.description}</p>
-                        <p className="text-xs text-slate-400 mt-2">Pincode: {job.pincode}</p>
+
+                        {/* SHOW PROVIDER DETAILS IF ACCEPTED */}
+                        {job.status === 'ACCEPTED' && (
+                        <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-100">
+                            <p className="text-sm font-bold text-green-800">✅ Provider Found!</p>
+                            <p className="text-xs text-green-700">Name: {job.providerName}</p>
+                            <p className="text-xs text-green-700">Phone: {job.providerPhone}</p>
+                        </div>
+                        )}
                     </div>
-                    ))
+                ))
                 )}
             </div>
         </div>

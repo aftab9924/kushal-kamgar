@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
+import Logo from "../assets/Logo.png"
+import Footer from '../components/layout/Footer';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -9,9 +11,22 @@ const LandingPage = () => {
     <div className="min-h-screen bg-slate-50">
       {/* Navbar Placeholder */}
       <nav className="p-6 flex justify-between items-center bg-white shadow-sm">
-        <h1 className="text-2xl font-bold text-blue-600">Kushal Kamgar</h1>
+       <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
+          <img 
+            src={Logo} 
+            alt="Kushal Kamgar Logo" 
+            // Added -ml-6 to pull it left
+            // Added md:h-20 for a nice big desktop size
+            className="h-16 md:h-20 w-auto object-contain -ml-6 transition-transform hover:scale-105" 
+          />
+        </div>
         <div className="space-x-4">
-          <button className="text-slate-600 hover:text-blue-600 font-medium">About Us</button>
+          <Button 
+            onClick={() => navigate('/about')}
+            variant="outline"
+          >
+            About Us
+          </Button>
           <Button variant="outline" onClick={() => navigate('/login')}>Login</Button>
         </div>
       </nav>

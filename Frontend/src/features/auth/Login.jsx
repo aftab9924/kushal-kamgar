@@ -29,6 +29,7 @@ const Login = () => {
           user: {
             name: "Test User",
             email: data.email,
+            phone: data.phone,
             role: data.email.includes("worker") ? "PROVIDER" : "CUSTOMER" // trick to test both roles
           }
         };

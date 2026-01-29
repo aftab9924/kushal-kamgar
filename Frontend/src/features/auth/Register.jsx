@@ -1,15 +1,19 @@
-import { useLocation } from "react-router-dom"; 
+import { useLocation, useNavigate } from "react-router-dom"; 
 import { useForm } from "react-hook-form";
 import Input from "../../components/ui/Input"
 import Button from "../../components/ui/Button";
+import toast from "react-hot-toast";
+
 
 const Register = () => {
 
   const location = useLocation(); 
 
+  const navigate = useNavigate();
+
   const preSelectedRole = location.state?.selectedRole || 'CUSTOMER';
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({
     defaultValues: {
       role: preSelectedRole // Initialize the role in the form data
     }
@@ -17,6 +21,21 @@ const Register = () => {
 
   const onSubmit = (data) => {
     console.log("Form Data Sent to Spring Boot:", data);
+    setTimeout(() => {
+    reset();
+    
+    // Instead of alert("Success!"), use this:
+    toast.success('Registration Successful! Please login.', {
+      duration: 4000,
+      style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+      },
+    });
+
+    navigate('/login');
+  }, 1000);
   };
 
   return (
@@ -49,6 +68,17 @@ const Register = () => {
                 message: "Invalid email address"
               }
             })}
+          />
+
+          <Input 
+            label="Phone Number" 
+            placeholder="10-digit mobile number" 
+            type="tel"
+            error={errors.phone}
+            {...register("phone", { 
+              required: "Phone number is required",
+              pattern: { value: /^[6-9]\d{9}$/, message: "Please enter a valid 10-digit Indian number" } 
+            })} 
           />
 
           <Input 
